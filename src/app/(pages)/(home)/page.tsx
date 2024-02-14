@@ -1,111 +1,89 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { createClient } from "@supabase/supabase-js";
-import { Textarea } from "@/components/ui/textarea";
-import { MercadoPagoConfig, Preference } from "mercadopago";
-import { redirect } from "next/navigation";
+/* eslint-disable @next/next/no-img-element */
+import Container from "@/components/container";
+import { raleway } from "@/lib/fonts";
+import { ShoppingBag } from "lucide-react";
+import React from "react";
 
-const client = new MercadoPagoConfig({
-  accessToken: process.env.MP_ACCESS_TOKEN!,
-});
+const products = [
+  {
+    id: 1,
+    name: "Mac mini M2",
+    price: "3000.00",
+    imgUrl: './mac-mini-transparente.png'
+  },
+  {
+    id: 2,
+    name: "Galaxy Tab S8+",
+    price: "3100.00",
+    imgUrl: './galaxy-tab-s8.png'
+  },
+  {
+    id: 3,
+    name: "Apple watch 8",
+    price: "1900.00",
+    imgUrl: './apple-watch-s8.png'
+  },
+  {
+    id: 4,
+    name: "Iphone 15 Pro",
+    price: "4990.00",
+    imgUrl: './iphone-15-pro.webp'
+  },
+];
 
-// const supabase = createClient(
-//   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-//   process.env.SUPABASE_SECRET!
-// );
-
-export default async function Home() {
-  // const donations = await supabase
-  //   .from("donations")
-  //   .select("*")
-  //   .then(
-  //     ({ data }) =>
-  //       data as unknown as Promise<
-  //         { id: number; created_at: number; amount: number; message: string }[]
-  //       >
-  //   );
-
-  async function donate(formData: FormData) {
-    "use server";
-
-    console.log(formData)
-
-    const preference = await new Preference(client).create({
-      body: {
-        items: [
-          {
-            id: "donacion",
-            title: formData.get("message") as string,
-            quantity: 1,
-            unit_price: Number(formData.get("amount")),
-          },
-        ],
-      },
-    });
-
-    redirect(preference.sandbox_init_point!);
-  }
-
+const Home = () => {
   return (
-    <section className="container m-auto grid min-h-screen grid-rows-[auto,1fr,auto] bg-background px-4 font-sans antialiased">
-      <header className="text-xl font-bold leading-[4rem]">
-        stream-donancy
-      </header>
-      <main className="py-8">
-        <section className="grid gap-12">
-          <form
-            action={donate}
-            className="m-auto grid max-w-96 gap-8 border p-4"
-          >
-            <Label className="grid gap-2">
-              <span>Valor</span>
-              <Input name="amount" type="number" />
-            </Label>
-            <Label className="grid gap-2">
-              <span>Tu mensaje en la donación</span>
-              <Textarea name="message" />
-            </Label>
-            <Button type="submit">Enviar</Button>
-          </form>
-          {/* <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Cantidad</TableHead>
-                <TableHead className="text-right">Mensaje</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {donations.map((donation) => {
-                return (
-                  <TableRow key={donation.id}>
-                    <TableCell className="font-bold">
-                      {donation.amount.toLocaleString("es-AR", {
-                        style: "currency",
-                        currency: "ARS",
-                      })}
-                    </TableCell>
-                    <TableCell className="text-right">
-                      {donation.message}
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table> */}
-        </section>
-      </main>
-      <footer className="text-center leading-[4rem] opacity-70">
-        © {new Date().getFullYear()} stream-donancy
-      </footer>
-    </section>
+    <Container className="min-h-screen">
+      <section className="w-full">
+        <div className="w-full mt-4">
+          <img
+            className="object-cover object-top h-[550px] w-full rounded-lg"
+            src="./mac-mini.jpg"
+            alt="banner-img"
+          />
+        </div>
+      </section>
+
+      <section className="my-16 flex flex-col">
+        <header className="flex flex-col w-full items-center gap-2 mb-10">
+          <h3 className={`text-3xl font-bold ${raleway.className}`}>
+            Nuevos Productos
+          </h3>
+          <p className="text-sm text-muted-foreground">
+            Traemos los ultimos productos en tecnologia a precios competitivos
+          </p>
+        </header>
+
+        <main>
+          <div className="grid grid-cols-[repeat(4,minmax(0,1fr))] gap-16">
+            {products.map((product) => (
+              <div
+                key={product.id}
+                className="flex flex-col gap-4 items-center w-full"
+              >
+                <div className="h-80 w-full bg-secondary rounded-lg">
+                  <img className="h-full w-full object-contain object-center" src={product.imgUrl} alt="" />
+                </div>
+
+                <div className="flex w-full justify-between">
+                  <div className="flex flex-col gap-1 text-sm">
+                    <span className="font-medium">{product.name}</span>
+                    <span>S/. {product.price}</span>
+                  </div>
+
+                  <div className="flex justify-center items-center ">
+                    <div className="flex justify-center items-center border-2 border-foreground h-9 w-9 rounded-full hover:bg-foreground hover:text-card cursor-pointer transition-all antialised">
+                      <ShoppingBag className="h-5 w-5" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </main>
+      </section>
+    </Container>
   );
-}
+};
+
+export default Home;
