@@ -63,8 +63,8 @@ const Footer = () => {
 
   return (
     <footer className="w-full bg-foreground text-card">
-      <div className="flex w-full justify-between space-x-2 px-10 pt-16 pb-10">
-        <div className="flex flex-col flex-grow basis-0">
+      <div className="flex flex-col gap-10 lg:flex-row w-full justify-between space-x-2 px-10 pt-16 pb-10">
+        <div className="flex flex-col md:flex-grow md:basis-0 items-center md:items-baseline text-center md:text-start">
           <div className="flex gap-2 pb-2">
             <Building />
             <h2 className="text-xl font-bold">Soluciones Inteligentes</h2>
@@ -75,7 +75,7 @@ const Footer = () => {
           </p>
         </div>
 
-        <div className="flex space-x-20">
+        <div className="flex flex-wrap gap-6 justify-between px-2 md:gap-0 md:justify-normal md:flex-nowrap md:space-x-20">
           <div className="flex flex-col min-w-[100px]">
             <span className="text-sm pb-3">Categorias</span>
             <ul>
@@ -125,9 +125,9 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="flexl flex-grow basis-0 justify-end col-span-2">
+        <div className="flexl flex-grow basis-0 justify-end">
           <div className="flex justify-end">
-            <span>store@solucionesinteligentes.com</span>
+            <span className="text-sm">store@solucionesinteligentes.com</span>
           </div>
         </div>
       </div>
