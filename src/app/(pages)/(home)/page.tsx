@@ -2,33 +2,36 @@
 import Container from "@/components/container";
 import ProductCard from "@/components/product-card";
 import { raleway } from "@/lib/fonts";
-import { ShoppingBag } from "lucide-react";
 import React from "react";
 
 const products = [
   {
     id: 1,
+    name: "Iphone 15 Pro",
+    slug: "iphone-15-pro",
+    price: 4990.0,
+    imgUrl: "./iphone-15-pro.webp",
+  },
+  {
+    id: 2,
     name: "Mac mini M2",
+    slug: "mac-mini-m2",
     price: 3000.0,
     imgUrl: "./mac-mini-transparente.png",
   },
   {
-    id: 2,
+    id: 3,
     name: "Galaxy Tab S8+",
+    slug: "galaxy-tab-s8",
     price: 3100.0,
     imgUrl: "./galaxy-tab-s8.png",
   },
   {
-    id: 3,
-    name: "Apple watch 8",
+    id: 4,
+    name: "Apple watch s8",
+    slug: "apple-watch-s8",
     price: 1900.0,
     imgUrl: "./apple-watch-s8.png",
-  },
-  {
-    id: 4,
-    name: "Iphone 15 Pro",
-    price: 4990.0,
-    imgUrl: "./iphone-15-pro.webp",
   },
 ];
 

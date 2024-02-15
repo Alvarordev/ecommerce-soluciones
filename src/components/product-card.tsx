@@ -1,9 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
-import { ShoppingBag } from "lucide-react";
+"use client";
 
-interface Product {
+import { ShoppingBag } from "lucide-react";
+import { useRouter } from "next/navigation";
+
+export interface Product {
   id: number;
   name: string;
+  slug: string;
   price: number;
   imgUrl: string;
 }
@@ -13,13 +17,20 @@ interface Props {
 }
 
 const ProductCard = ({ product }: Props) => {
+  const router = useRouter();
+
   return (
-    <div className="flex flex-col gap-4 items-center w-full">
-      <div className="h-80 w-full bg-secondary rounded-lg">
+    <div className="flex flex-col gap-4 items-center w-full ">
+      <div
+        onClick={() => {
+          router.push(`product/${product.slug}?${product.id}`);
+        }}
+        className="w-full aspect-[8/9] bg-secondary rounded-lg shadow hover:scale-105 transition-all cursor-pointer"
+      >
         <img
           className="h-full w-full object-contain object-center"
           src={product.imgUrl}
-          alt=""
+          alt="product image"
         />
       </div>
 
