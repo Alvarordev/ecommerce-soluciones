@@ -1,8 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import { formatCurrency } from "@/lib/utils";
 import { ShoppingBag } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export interface Product {
   id: number;
@@ -18,12 +19,17 @@ interface Props {
 
 const ProductCard = ({ product }: Props) => {
   const router = useRouter();
+  const pathname = usePathname();
 
   return (
     <div className="flex flex-col gap-4 items-center w-full ">
       <div
         onClick={() => {
-          router.push(`product/${product.slug}?${product.id}`);
+          router.push(
+            `${pathname.includes("product") ? "" : "product/"}${product.slug}?${
+              product.id
+            }`
+          );
         }}
         className="w-full aspect-[8/9] bg-secondary rounded-lg shadow hover:scale-105 transition-all cursor-pointer"
       >
@@ -37,7 +43,7 @@ const ProductCard = ({ product }: Props) => {
       <div className="flex w-full justify-between">
         <div className="flex flex-col gap-1 text-sm">
           <span className="font-medium">{product.name}</span>
-          <span>S/. {product.price}</span>
+          <span>{formatCurrency(product.price)}</span>
         </div>
 
         <div className="flex justify-center items-center ">

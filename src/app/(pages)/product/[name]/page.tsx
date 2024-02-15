@@ -1,8 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import Container from "@/components/container";
 import ProductCard, { Product } from "@/components/product-card";
+import ActionButtons from "@/components/product/action-buttons";
 import { Button } from "@/components/ui/button";
 import { raleway } from "@/lib/fonts";
+import { formatCurrency } from "@/lib/utils";
+import MercadoPagoConfig from "mercadopago";
 
 interface Props {
   params: { name: string };
@@ -40,17 +43,15 @@ const products = [
   },
 ];
 
-const Product = ({ params, searchParams }: Props) => {
+const client = new MercadoPagoConfig({
+  accessToken: process.env.MP_ACCESS_TOKEN!,
+});
+
+const Product = ({ params }: Props) => {
   const product: Product[] = products.filter(
     ({ slug }) => params.name === slug
   );
 
-  let penSol = new Intl.NumberFormat("es-PE", {
-    style: "currency",
-    currency: "PEN",
-  });
-
-  console.log(product);
 
   return (
     <Container className="min-h-screen">
@@ -87,7 +88,7 @@ const Product = ({ params, searchParams }: Props) => {
             <span className="text-sm text-muted-foreground">Smartphone</span>
             <span className={`text-4xl font-semibold`}>{product[0].name}</span>
             <span className="text-2xl font-medium">
-              {penSol.format(product[0].price)}
+              {formatCurrency(product[0].price)}
             </span>
           </div>
 
@@ -108,23 +109,13 @@ const Product = ({ params, searchParams }: Props) => {
           </div>
 
           <div className="w-80">
-            <span className="font-semibold text-xs">Colores disponible</span>
+            <span className="font-semibold text-xs">Colores disponibles</span>
             <div className="flex justify-center items-center border border-foreground rounded-full h-7 w-7 p-1 mt-2">
               <div className="rounded-full bg-foreground h-full w-full "></div>
             </div>
           </div>
 
-          <div className="flex flex-wrap justify-center md:justify-normal w-full gap-3 pt-3">
-            <Button
-              variant="outline"
-              className="rounded-full px-6 sm:px-8 lg:px-10 h-9"
-            >
-              <span className="text-xs">Agregar al carro</span>
-            </Button>
-            <Button className="rounded-full px-6 sm:px-8 lg:px-10 h-9">
-              <span className="text-xs">Comprar ahora</span>
-            </Button>
-          </div>
+          <ActionButtons product={product[0]} />
         </div>
       </section>
 
