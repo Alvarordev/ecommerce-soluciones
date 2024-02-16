@@ -2,10 +2,8 @@
 import Container from "@/components/container";
 import ProductCard, { Product } from "@/components/product-card";
 import ActionButtons from "@/components/product/action-buttons";
-import { Button } from "@/components/ui/button";
 import { raleway } from "@/lib/fonts";
 import { formatCurrency } from "@/lib/utils";
-import MercadoPagoConfig from "mercadopago";
 
 interface Props {
   params: { name: string };
@@ -43,10 +41,6 @@ const products = [
   },
 ];
 
-const client = new MercadoPagoConfig({
-  accessToken: process.env.MP_ACCESS_TOKEN!,
-});
-
 const Product = ({ params }: Props) => {
   const product: Product[] = products.filter(
     ({ slug }) => params.name === slug
@@ -55,7 +49,7 @@ const Product = ({ params }: Props) => {
 
   return (
     <Container className="min-h-screen">
-      <section className="grid grid-col-1 md:grid-cols-10 gap-4 w-full my-8 sm:my-10">
+      <section className="grid grid-col-1 md:grid-cols-10 gap-4 w-full my-4">
         <div className="flex flex-col-reverse md:grid md:grid-cols-5 md:col-span-6 gap-4 px-4 sm:px-2">
           <div className="col-span-1 flex md:flex-col gap-4 max-h-[700px]">
             {Array(4)
@@ -119,7 +113,7 @@ const Product = ({ params }: Props) => {
         </div>
       </section>
 
-      <section className="px-4 md:px-2 mb-16">
+      <section className="px-4 md:px-2 pt-4 mb-16">
         <header className="mb-6">
           <h3 className={`${raleway.className} text-2xl font-bold`}>
             Estos articulos podrian interesarte
