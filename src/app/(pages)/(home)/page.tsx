@@ -2,7 +2,8 @@
 import Container from "@/components/container";
 import ProductCard from "@/components/product-card";
 import { raleway } from "@/lib/fonts";
-import React from "react";
+import supabase from "@/supabase";
+import { randomInt } from "crypto";
 
 const products = [
   {
@@ -35,7 +36,16 @@ const products = [
   },
 ];
 
-const Home = () => {
+const Home = async () => {
+  let { data, error } = await supabase
+    .from("product")
+    // This stupidity is here just because of caching
+    // for some reason, supabase underlying calls are being cached
+    // unless we add this random string to the query...
+    .select(`*`);
+
+  console.log(data);
+
   return (
     <Container className="min-h-screen">
       <section className="w-full">
